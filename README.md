@@ -1,4 +1,4 @@
-# delhi-legal-assist
+# Delhi-NCR-Legal-Assist-AI
 
 A retrieval-augmented research system over Indian legal primary sources
 (statutes, rules, court forms) for the Delhi NCR jurisdiction, scoped to
