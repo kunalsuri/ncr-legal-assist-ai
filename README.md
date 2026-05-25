@@ -7,6 +7,10 @@ property, tenancy, and housing law.
 > ⚠️ **This is a technical research project, not a legal information service.**
 > See [DISCLAIMER.md](./DISCLAIMER.md) before using or extending this code.
 
+[![License: Apache 2.0](https://img.shields.io/badge/code-Apache%202.0-blue.svg)](./LICENSE)
+[![KB License: CC-BY-SA-4.0](https://img.shields.io/badge/kb-CC--BY--SA--4.0-lightgrey.svg)](./knowledge_base/)
+[![Status: Pre-alpha](https://img.shields.io/badge/status-pre--alpha-orange.svg)](./README.md#project-status)
+
 ## What this is
 
 - An open-source software scaffold demonstrating retrieval-augmented
@@ -32,6 +36,41 @@ property, tenancy, and housing law.
 
 Five seed topics in Delhi tenancy, RERA, and property law. Statutes, rules,
 and court forms only. English only. No case law in v1. No Hindi in v1.
+
+## Repository layout
+
+This project follows the **Karpathy LLM-Wiki pattern** adapted for a legal
+domain — three immutable layers with strict boundaries:
+
+```
+ncr-legal-assist-ai/
+├── raw_sources/          # Immutable primary legal documents (PDFs, CSV, XLSX)
+│                         # Agents: read-only. Humans: add only.
+├── knowledge_base/       # Wiki articles paraphrasing raw_sources/ with citations
+│   ├── index.md          # Catalog of all articles
+│   ├── SCHEMA.md         # Required frontmatter schema
+│   └── statutes/         # Statute-by-statute paraphrase articles
+├── src/                  # RAG query layer (retrieval + generation + app)
+│   ├── app/              # Streamlit UI
+│   ├── generation/       # LLM client, prompts, citation verifier
+│   ├── indexing/         # Embeddings and vector store
+│   ├── ingestion/        # Chunker and Markdown loader
+│   └── retrieval/        # Hybrid retriever and reranker
+├── tests/                # pytest test suite (must pass before any PR)
+├── scripts/              # Index builder and model downloader
+├── specs/                # Technical specification
+├── docs/                 # Extended documentation
+├── AGENTS.md             # Authoritative AI agent schema (read this first)
+├── CLAUDE.md             # Claude Code entry point → defers to AGENTS.md
+└── .github/
+    └── copilot-instructions.md  # Copilot entry point → defers to AGENTS.md
+```
+
+The `raw_sources/` layer is never modified by agents or automation. The
+`knowledge_base/` layer is maintained by AI agents under human-merged PRs.
+The `src/` layer is the runtime query engine.
+
+For details on the agent configuration, see [docs/agent-configuration.md](./docs/agent-configuration.md).
 
 ## Architecture
 
@@ -86,6 +125,11 @@ frontmatter format.
 ```bash
 git clone https://github.com/<your-username>/delhi-legal-assist.git
 cd delhi-legal-assist
+
+# Set up Git LFS (required for raw_sources/ binaries)
+git lfs install
+git lfs pull
+
 cp .env.example .env
 make install
 make download-models
@@ -96,8 +140,25 @@ make run-app          # in another terminal
 
 ## Project status
 
-**Pre-alpha.** No knowledge-base articles are written. No reviewer is engaged.
-The pipeline runs end-to-end on an empty knowledge base.
+**Pre-alpha.** Five knowledge-base article stubs exist (frontmatter only,
+no body content). No reviewer is engaged. The pipeline runs end-to-end on
+an empty knowledge base. See [`knowledge_base/index.md`](./knowledge_base/index.md)
+for the current article list.
+
+## AI agent configuration
+
+This repository is configured for use with Claude Code and GitHub Copilot
+as disciplined wiki librarians. The configuration uses a three-layer design:
+
+1. **[`AGENTS.md`](./AGENTS.md)** — authoritative schema. Read this first.
+2. **[`CLAUDE.md`](./CLAUDE.md)** / **[`.github/copilot-instructions.md`](./.github/copilot-instructions.md)** — thin tool-specific pointers to `AGENTS.md`.
+3. **`.claude/skills/`** — three mandatory operational playbooks:
+   - `legal-citation-verifier` — before writing any wiki content
+   - `primary-source-ingest` — when ingesting a `raw_sources/` document
+   - `wiki-lint` — when running a wiki health check
+
+See [docs/agent-configuration.md](./docs/agent-configuration.md) for the full
+setup guide, Git LFS configuration, and first-session verification steps.
 
 ## Roadmap
 

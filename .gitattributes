@@ -1,0 +1,42 @@
+# Git LFS — store binary primary sources outside the regular Git history.
+#
+# Why: raw legal documents (PDFs of Acts, gazette notifications, scanned
+# court orders) range from 2 MB to 50 MB each. Committing them to regular
+# Git bloats the repository and slows every clone. Git LFS keeps the
+# repository fast while preserving bit-exact reproducibility per commit.
+#
+# What is tracked here lives in raw_sources/ and is IMMUTABLE per the
+# project schema. Do not add patterns for knowledge_base/ — wiki content
+# is plain Markdown and must remain diffable in regular Git.
+
+# Primary source documents
+raw_sources/**/*.pdf  filter=lfs diff=lfs merge=lfs -text
+raw_sources/**/*.PDF  filter=lfs diff=lfs merge=lfs -text
+
+# Scanned or image-based legal documents
+raw_sources/**/*.tif  filter=lfs diff=lfs merge=lfs -text
+raw_sources/**/*.tiff filter=lfs diff=lfs merge=lfs -text
+raw_sources/**/*.jpg  filter=lfs diff=lfs merge=lfs -text
+raw_sources/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+raw_sources/**/*.png  filter=lfs diff=lfs merge=lfs -text
+
+# Bulk statistical dumps from NJDG and similar
+raw_sources/**/*.xlsx filter=lfs diff=lfs merge=lfs -text
+raw_sources/**/*.xls  filter=lfs diff=lfs merge=lfs -text
+raw_sources/**/*.zip  filter=lfs diff=lfs merge=lfs -text
+
+# Office formats sometimes used by government circulars
+raw_sources/**/*.docx filter=lfs diff=lfs merge=lfs -text
+raw_sources/**/*.doc  filter=lfs diff=lfs merge=lfs -text
+
+# CSV stats files — small but binary-ish; LFS-tracked for consistency
+# of the raw_sources/ contract. Comment out if you prefer plain Git
+# for CSVs to keep them diffable.
+raw_sources/**/*.csv  filter=lfs diff=lfs merge=lfs -text
+
+# Normalize line endings for textual files anywhere in the repo
+*.md   text eol=lf
+*.py   text eol=lf
+*.toml text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
