@@ -1,5 +1,5 @@
 [project]
-name = "delhi-legal-assist"
+name = "ncr-legal-assist"
 version = "0.1.0"
 description = "Research RAG system over Indian legal primary sources for Delhi NCR"
 readme = "README.md"
@@ -31,6 +31,9 @@ dev = [
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
 
 [tool.ruff]
 line-length = 100
