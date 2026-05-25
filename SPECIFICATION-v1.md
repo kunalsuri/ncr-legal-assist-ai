@@ -1,4 +1,4 @@
-# Specification: `delhi-legal-assist` — Repository Scaffold
+# Specification: `delhi-ncr-legal-assist` — Repository Scaffold
 
 This document is a build specification for an AI coding agent (GitHub Copilot
 or equivalent). Follow it literally. Do not add features beyond what is
@@ -24,7 +24,7 @@ templates with frontmatter only.
 
 ## 2. Repository metadata
 
-- **Repository name**: `delhi-legal-assist`
+- **Repository name**: `ncr-legal-assist-ai`
 - **License**: Apache License 2.0 (include full text in `LICENSE`)
 - **Knowledge-base content license**: CC-BY-SA-4.0 (declared in README;
   no separate file needed at this stage)
@@ -42,7 +42,7 @@ YAML frontmatter as specified in Section 5. Files marked `[full]` get the
 complete content specified in the corresponding section.
 
 ```
-delhi-legal-assist/
+ncr-legal-assist-ai/
 ├── LICENSE                                    [full — Apache 2.0 text]
 ├── README.md                                  [full — see Section 4]
 ├── DISCLAIMER.md                              [full — see Section 4.2]
