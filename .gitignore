@@ -1,6 +1,20 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[codz]
+*.py[cod]
+.venv/
+venv/
+.env
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+data/
+!data/.gitkeep
+.streamlit/secrets.toml
+
+# legacy entries kept below
+# Byte-compiled / optimized / DLL files
 *$py.class
 
 # C extensions
